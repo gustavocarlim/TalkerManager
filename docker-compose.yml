@@ -41,7 +41,7 @@ services:
       # Expõe a porta padrão do banco de dados
       - 3306:3306
     environment:
-      MYSQL_ROOT_PASSWORD: passwor
+      MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: TalkerDB
     volumes:
       - ./seed.sql:/docker-entrypoint-initdb.d/seed.sql
