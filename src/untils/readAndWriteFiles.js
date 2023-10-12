@@ -10,6 +10,20 @@ const readTalker = async () => {
     err.statusCode = 500;
     throw err;
   }
-};
+}; 
 
-module.exports = { readTalker };
+const findTalkerById = async (id) => {
+  try {
+    console.log(typeof id);
+    const arrayFirst = await readTalker();
+    console.log('arrayfirst', arrayFirst);
+    const finded = arrayFirst.find((item) => item.id === id);
+    console.log('finded', finded);
+    return finded;
+  } catch (error) {
+    const err = new Error('Error opening file');
+    err.statusCode = 500;
+    throw err;
+  }
+};
+module.exports = { readTalker, findTalkerById };

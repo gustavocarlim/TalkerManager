@@ -3,19 +3,21 @@ const readAndwriteFiles = require('../untils/readAndWriteFiles');
 
 const router = Router();
 
-router.get('/', async (_req, res) => {
+router.get('/talker', async (_req, res) => {
+  console.log('penis');
   const talkers = await readAndwriteFiles.readTalker();
   res.status(200).json(talkers);
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/talker/:id', async (req, res) => {
   const { id } = req.params;
-  const talkers = await readAndwriteFiles.readTalker();
-  const selectedTalker = talkers.find((talker) => talker.id === Number(id));
-  if (!selectedTalker) {
-    return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
-  }
-  return res.status(200).json(selectedTalker);
+  console.log(id);
+  const talker = await readAndwriteFiles.findTalkerById(Number(id));
+  console.log(talker); 
+  if (talker) return res.status(200).json(talker);
+  return res.status(404).json(
+    { message: 'Pessoa palestrante não encontrada' },
+  );
 });
 
-module.exports = router;    
+module.exports = router;   
