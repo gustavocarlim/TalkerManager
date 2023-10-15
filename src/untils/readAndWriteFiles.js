@@ -55,4 +55,15 @@ const findTalkerById = async (id) => {
     throw err;
   }
 };
-module.exports = { readTalker, findTalkerById, writeTalker, editTalker };
+
+const deleteTalker = async (id) => {
+  try {
+    const talkers = await readTalker();
+    const newTalker = talkers.filter((talker) => talker.id !== Number(id));
+    return await fs.writeFile('src/talker.json', JSON.stringify(newTalker));
+  } catch (error) {
+    console.error(error);
+  }
+};
+  
+module.exports = { readTalker, findTalkerById, writeTalker, editTalker, deleteTalker };
