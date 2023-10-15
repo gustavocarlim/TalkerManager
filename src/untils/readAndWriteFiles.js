@@ -12,6 +12,19 @@ const readTalker = async () => {
   }
 }; 
 
+const writeTalker = async (newTalker) => {
+  try {
+    const oldTalkers = await readTalker();
+    oldTalkers.push(newTalker);
+
+    return await fs.writeFile('src/talker.json', JSON.stringify(oldTalkers));
+  } catch (error) {
+    const err = new Error('Error writing file');
+    err.statusCode = 500;
+    throw err;
+  }
+};
+
 const findTalkerById = async (id) => {
   try {
     const arrayFirst = await readTalker();
@@ -23,4 +36,4 @@ const findTalkerById = async (id) => {
     throw err;
   }
 };
-module.exports = { readTalker, findTalkerById };
+module.exports = { readTalker, findTalkerById, writeTalker };
