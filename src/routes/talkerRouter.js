@@ -6,6 +6,7 @@ const talkerInfoValidation = require('../untils/talkerInfoValidation');
 const tokenValidation = require('../untils/tokenValidation');
 const watchedValidation = require('../untils/WatchedValidation');
 const rateValidation = require('../untils/rateValidation');
+const idValidation = require('../untils/idValidation');
 
 const router = Router();
 
@@ -41,4 +42,19 @@ router.post('/talker', nameValidation, talkerInfoValidation, rateValidation,
     }
   });
 
+router.put('/talker/:id', tokenValidation, nameValidation, ageValidation, 
+  talkerInfoValidation, rateValidation, 
+  watchedValidation, idValidation, async (req, res, next) => {
+    try {
+      const { id } = req.params;
+
+      await readAndwriteFiles.editTalker(id, req.body);
+
+      const updatedTalker = { id: Number(id), ...req.body };
+
+      res.status(200).json(updatedTalker);
+    } catch (error) {
+      next(error);
+    }
+  });
 module.exports = router;   

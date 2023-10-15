@@ -25,6 +25,25 @@ const writeTalker = async (newTalker) => {
   }
 };
 
+const editTalker = async (id, body) => {
+  try {
+    const oldTalkers = await readTalker();
+    const newTalker = oldTalkers.map((talker) => {
+      if (talker.id === Number(id)) {
+        const oldInfo = { ...talker };
+        oldInfo.name = body.name;
+        oldInfo.age = body.age;
+        oldInfo.talk = body.talk;
+        return oldInfo;
+      }
+      return talker;
+    });
+    return await fs.writeFile('src/talker.json', JSON.stringify(newTalker));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const findTalkerById = async (id) => {
   try {
     const arrayFirst = await readTalker();
@@ -36,4 +55,4 @@ const findTalkerById = async (id) => {
     throw err;
   }
 };
-module.exports = { readTalker, findTalkerById, writeTalker };
+module.exports = { readTalker, findTalkerById, writeTalker, editTalker };
